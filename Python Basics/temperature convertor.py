@@ -1,3 +1,5 @@
+import customtkinter as ctk
+
 # Temperature convertion functions
 def celsius_to_fahrenheit(celsius): return (celsius * 9/5) + 32
 
@@ -12,9 +14,10 @@ def fahrenheit_to_kelvin(fahrenheit): return (fahrenheit - 32) * 5/9 + 273.15
 def kelvin_to_fahrenheit(kelvin): return (9/5) * (kelvin - 273.15) + 32
 
 def get_temperature():
-    return input('Please enter a temperature: ').strip()
-
+    return input('Please enter a temperature with its temperature unit (C, F, or K): ').strip()
+# temperature validator
 def validate_temperature():
+    """Checks and validates temperature input"""
     while True:
         try:
             temperature = get_temperature()
@@ -35,6 +38,7 @@ def validate_temperature():
             return number_unit, temperature_unit
 
 def main():
+    """This is main function. Converts temperatures"""
     number, unit = validate_temperature()
     c_to_f = celsius_to_fahrenheit(number)
     c_to_k = celsius_to_kelvin(number)
