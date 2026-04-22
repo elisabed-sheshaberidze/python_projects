@@ -1,98 +1,86 @@
-# # goal: create simple game where the player has to guess game and gather points
-# # rules: player chooses scope 1-15, 1-30, 1-50
-# # has to collect 100 points
-# # has 5 attempts. correct answer +5, +10, +20 points ( 1-15, 1-30, 1-50). If wrong - same score
-# # will have hints. Odd/even always
-# # rules
-import random
-import turtle
+# in this "Number Guessing Game" player can choose a range and keep track of their progress.
+from random import randint
+import string
 import time
-# player name
+
+# constants
+LOWEST_NUMBER = 1
+
+
+
+#  -- I define and validate user name --
+
 def get_username():
-    print('Hello, player!')
-    time.sleep(1.5)
+    return input('Please enter a username! ')
+
+def validate_username():
+    """This function cleans the user name. rejects if it contains invalid characters - anything other
+    that letters, digits and underscores """
+    print('Username can contain only letters, numbers and underscores.')
+
+    allowed = string.ascii_letters + string.digits + '_'
     while True:
-        player = input(
-            'Please enter your name! (Only letters/digits and no space): ')
-        cln_player = player.strip()
-        if cln_player.isalnum():
-            return cln_player
+        raw_username = get_username()
+        cln_username = raw_username.strip().lower()
+        if not cln_username:
+            print('Please enter a username!')
+            continue
+        elif len(cln_username) < 4 or len(cln_username) > 20:
+            print('Username is too short/long!')
+            continue
+        elif not all(char in allowed for char in cln_username):
+            print('Username contains invalid characters!')
+            continue
         else:
-            print('Oops, please use only letters and digits wiith no space.')
-def rules():
-    print(f'''Welcome {player_name} to the Number Guessing Game!
-            Here is you guide:
-          1) First you must difficulty level (easy: 1-10, medium: 1-30 or hard: 1-50).
-          2) Your goal is to collect 100 scores.
-          3) You have 5 tries to guess the number
-          4) If you fail you lose points, if you win, you gain
-          Point system:
-           - + or - 5 points if the scope is 1-10
-           - + or - 10 points if the scope is 1-30
-           - + or - 20 points if the scope is 1-50
-    ''')
-# game difficulty
-def game_difficulty():
-    print('Please choose the difficulty level of the game ')
+            return cln_username
+
+
+
+# User chooses game difficulty based on the number range
+# 30 - easy mode; 50 - medium; 100 - hard mode.
+
+
+def get_highest_number():
+    return input('Please enter max number - 30, 50, 100 ')
+
+def validate_highest_number():
+    """This function validates the highest number from given range
+     (rejects unwanted characters of numbers)
+     and returns the highest number."""
+
     while True:
-        try:
-            difficulty = int(input('easy: 15, medium: 30 or hard: 50. '))
-            if difficulty in [15, 30, 50]:
-                return difficulty
-            else:
-                print('Reminder: limit must be either 15, 30, or 50: ')
-        except ValueError:
-            print('Please enter the number!')
-difficulty_level = game_difficulty()
-def score_system():
-    if difficulty_level == 15:
-        score = 5
-    elif difficulty_level == 30:
-        score = 10
-    else:
-        score = 20
-    return score
-def winners_surprise():
-    print('Congratulations! You win!')
-    time.sleep(2)
-    print('I have a surprise :)')
-    time.sleep(2)
-    print('Ready...')
-    time.sleep(2)
-    t = turtle.Turtle()
-    s = turtle.Screen()
-    s.title('Click to exit!')
-    s.bgcolor('#f8edeb')
-    t.write("\"The most certain way to succeed is always to try just one more time.\" — "
-            "Thomas Edison", align="center", font=("Verdana", 10, "normal"))
-    turtle.exitonclick()
-def play_game():
-    total_score = 0
-    while total_score < 100:
-        number_to_guess = random.randint(1, difficulty_level)
-        tries = 5
-        while tries > 0:
-            try:
-                if number_to_guess % 2 == 0:
-                    print('The number is even')
-                else:
-                    print('The number is odd')
-                guessed_number = int(input('Take a guess! '))
-                if guessed_number == number_to_guess:
-                    print('Good job! You guessed the number! Here is you point')
-                    total_score += score_system()
-                    print(f'Your total score is {total_score}')
-                    break
-                else:
-                    print('Oops, not your lucky try! Guess again!')
-                    tries -= 1
-                if tries == 0:
-                    total_score -= score_system()
-                    print(f'The number was {number_to_guess}! Here is your current score: {total_score}')
-            except ValueError:
-                print('Hmm... ypu have to guess number. Please enter a number!')
-        if total_score == 100:
-            winners_surprise()
-player_name = get_username()
-rules()
-play_game()
+        highest_number = get_highest_number()
+        if highest_number.strip() not in ['30', '50', '100']:
+            print('Please enter valid number either 30, 50 or 100!')
+            continue
+        else:
+            highest_number = int(highest_number)
+            return highest_number
+
+def number_range(maximum=30):
+    return randint(LOWEST_NUMBER, maximum)
+
+
+
+
+
+
+def rules():
+    """Rules of games. This function explains what players can do."""
+
+    print(f'''Welcome {user} to the Number Guessing Game!
+          {time.sleep(2)}
+          Here are rules😁
+          • First, you must choose the game difficulty level.
+          •
+    ''')
+user = validate_username()
+max_number = validate_highest_number()
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
+
+
