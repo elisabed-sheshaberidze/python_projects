@@ -1,11 +1,11 @@
-# 🐍 personal_projects
+I am Elisabed, a first-year Computer Science and AI student at 
+Business and Technology University, aspiring to become a Data Engineer. 
+This repository contains Python projects built while learning core 
+Python fundamentals and advancing toward OOP and GUI development. 
+Current projects are written using procedural programming — 
+function-based, pre-OOP. Each project folder contains its own README 
+with details.
 
-Hi there!
-
-This repository contains Python projects and exercises built as part of my learning journey. The focus is on core Python concepts, problem-solving, and writing clean, readable code — while steadily improving structure and quality over time.
-
-**Purpose:**
-- Practice and strengthen Python fundamentals
-- Apply concepts through small, focused real-world projects
-- Build consistent coding habits
-- Track technical growth over time
+## Projects
+- Number Guessing Game
+- Temperature Converte
