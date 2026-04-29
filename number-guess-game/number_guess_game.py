@@ -4,8 +4,8 @@ import time
 
 # constants
 LOWEST_NUMBER = 1
-
-
+MIN_POINT = -20
+WINNING_POINT = 100
 #  -- Define and validate user name --
 
 def get_username():
@@ -78,11 +78,66 @@ def deduct_points(maximum_number):
         deduct = 8
     return deduct
 
-def start_game():
+# random number. tries=5. MIN_POINT = -20, WINNING_POINT = 100
+
+def odd_or_even(number_to_guess):
+    if number_to_guess % 2 == 0:
+        return 'even'   
+    else:
+        return 'odd'    
+
+def start_game(award, deduct, maximum_number):
+
     """This function starts the game. It generates a random number and asks user to guess it.
      It also counts points, the number of attempts and gives feedback to user."""
-    pass
+    
+    total_points = 0
+    while True:
+        number_to_guess = generate_number(maximum_number)
+        hint = odd_or_even(number_to_guess)
+        want_to_quit = False
+        total_tries = 5
+        
+        while True:
+            try:
+                guessed_number = input(f'Guess the number between {LOWEST_NUMBER} and {maximum_number}: Psst... The number is {hint}')
 
+                
+                if guessed_number.lower().strip() == 'quit':
+                    want_to_quit = True
+                    break
+                if int(guessed_number) == number_to_guess:
+                    total_points += award
+                    print(f'Correct! You earned {award} points! Your total points: {total_points}')
+                    break
+                elif int(guessed_number) < number_to_guess:
+                    print(f'Too low! You lost {deduct} points! Your total points: {total_points}')
+                    total_tries -= 1
+                    total_points -= deduct
+                elif int(guessed_number) > number_to_guess:
+                    print(f'Too high! You lost {deduct} points! Your total points: {total_points}')
+                    total_tries -= 1
+                    total_points -= deduct
+                if total_tries == 0:
+                    print(f'No more tries left! The correct number was - "{number_to_guess}".')
+                    print(f'your total points: {total_points}')
+                    break 
+
+            except ValueError:
+                print('Please enter a valid number!')
+                continue
+
+        if want_to_quit:
+            break
+
+        if total_points <= MIN_POINT:
+            print('You lost the game! 😞')
+            break
+        elif total_points >= WINNING_POINT:
+            print('Congratulations! You won the game! 🥳' \
+            'You are the master of numbers! 🧙️')
+            break
+    
 
 
 
@@ -99,6 +154,8 @@ def rules(user):
           • The points you get or lose depend on the difficulty level you choose.
           • Rewards: easy mode +5 points, medium mode +10 points, hard mode +20 points.
           • Penalties: easy mode -2 points, medium mode -3 points, hard mode -8 points.
+
+          note: Type quit to exit the game at any time.
         =======================================================================================
                                         GOOD LUCK! 🍀
 
@@ -108,8 +165,11 @@ def rules(user):
 def main():
     user = validate_username()
     maximum_number = validate_difficulty()
+    award = award_points(maximum_number)
+    deduct = deduct_points(maximum_number)
+
     rules(user)
-    start_game()
+    start_game(award, deduct, maximum_number)
 
 
 if __name__ == '__main__':
