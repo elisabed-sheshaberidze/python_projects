@@ -1,6 +1,5 @@
 from random import randint
 import string
-import time
 
 # constants
 LOWEST_NUMBER = 1
