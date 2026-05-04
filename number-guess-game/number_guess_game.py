@@ -46,7 +46,10 @@ def validate_difficulty():
 
     while True:
         highest_number = get_difficulty()
-        if highest_number.strip() not in ['30', '50', '100']:
+        if highest_number.strip().lower() == 'quit':
+            print('Goodbye! 👋')
+            break
+        elif highest_number.strip() not in ['30', '50', '100']:
             print('Please enter valid number either 30, 50 or 100!')
             continue
         else:
@@ -163,11 +166,10 @@ def rules(user):
 
 def main():
     user = validate_username()
+    rules(user)
     maximum_number = validate_difficulty()
     award = award_points(maximum_number)
     deduct = deduct_points(maximum_number)
-
-    rules(user)
     start_game(award, deduct, maximum_number)
 
 
