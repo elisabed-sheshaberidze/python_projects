@@ -16,3 +16,6 @@ my own logic and ideas with a focus on understanding Python deeply.
 - Temperature Converter
 - Number Guessing Game
   
+## Coming Soon
+- Personal Expense Tracker
+  
