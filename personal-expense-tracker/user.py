@@ -18,7 +18,7 @@ class User:
         elif value[0] in '_0123456789':
             raise ValueError("Username cannot start with underscore or number.")
         else:
-            self._username = value
+            self._username = value.lower().strip()
 
     @property
     def password(self):
